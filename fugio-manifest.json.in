@@ -1,0 +1,14 @@
+{
+  "author": "Alex May",
+  "contact": "https://github.com/bigfug",
+  "homepage": "https://github.com/bigfug",
+  "description": "PortAudio plugins for Fugio",
+  "identifier": "com.bigfug.fugio.portaudio",
+  "plugins": {
+	"com.bigfug.fugio.portaudio": {
+	  "1.0.0": {
+		"win64": "@FUGIO_PLUGIN_URL@/fugio-portaudio-win64.zip"
+	  }
+	}
+  }
+}
