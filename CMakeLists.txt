@@ -153,6 +153,7 @@ ExternalProject_Add(portuadio
   GIT_TAG           v19.7.0
   CMAKE_ARGS
 		  -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_BINARY_DIR}/portaudio
+		  -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
 )
 
 #------------------------------------------------------------------------------
