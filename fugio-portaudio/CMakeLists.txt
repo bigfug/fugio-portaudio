@@ -50,7 +50,6 @@ set( SOURCE_FILES
 )
 
 set( QRC_FILES
-	translations/translations.qrc
 )
 
 add_library( ${PROJECT_NAME} MODULE ${SOURCE_FILES} ${HEADER_FILES} ${QRC_FILES} )
@@ -129,9 +128,9 @@ install( DIRECTORY examples	DESTINATION . COMPONENT ${PROJECT_NAME} PATTERN ".*"
 #------------------------------------------------------------------------------
 # Qt5
 
-find_package( Qt5 COMPONENTS Core Widgets LinguistTools REQUIRED )
+find_package( Qt6 COMPONENTS Core Widgets LinguistTools REQUIRED )
 
-target_link_libraries( ${PROJECT_NAME} Qt5::Core Qt5::Widgets )
+target_link_libraries( ${PROJECT_NAME} Qt::Core Qt::Widgets )
 
 #------------------------------------------------------------------------------
 # Translations
