@@ -37,26 +37,29 @@ endif()
 #------------------------------------------------------------------------------
 # Fugio API
 
+set( FUGIO_API_ZIP_URL "https://github.com/bigfug/Fugio/releases/download/v3.1.0/fugio-api.zip" CACHE STRING "URL to fugio-api.zip" )
+set( FUGIO_CORE_API_ZIP_URL "https://github.com/bigfug/fugio-core-plugins/releases/download/latest/fugio-core-api.zip" CACHE STRING "URL to fugio-core-api.zip" )
+
 if( NOT EXISTS "${CMAKE_BINARY_DIR}/include/fugio" )
-	message( "Initialising fugio-api" )
+    message( "Initialising fugio-api" )
 
-	file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/include )
+    file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/include )
 
-	file(DOWNLOAD
-		https://github.com/bigfug/Fugio/releases/download/v3.1.0/fugio-api.zip
-		${CMAKE_BINARY_DIR}/fugio-api.zip
-	)
+    file(DOWNLOAD
+            ${FUGIO_API_ZIP_URL}
+            ${CMAKE_BINARY_DIR}/fugio-api.zip
+    )
 
-	file(DOWNLOAD
-		https://github.com/bigfug/fugio-core-plugins/releases/download/latest/fugio-core-api.zip
-		${CMAKE_BINARY_DIR}/fugio-core-api.zip
-	)
+    file(DOWNLOAD
+            ${FUGIO_CORE_API_ZIP_URL}
+            ${CMAKE_BINARY_DIR}/fugio-core-api.zip
+    )
 
-	execute_process( COMMAND "${CMAKE_COMMAND}" -E tar -xzf ${CMAKE_BINARY_DIR}/fugio-api.zip
-		WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/include" )
+    execute_process( COMMAND "${CMAKE_COMMAND}" -E tar -xzf ${CMAKE_BINARY_DIR}/fugio-api.zip
+            WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/include" )
 
-	execute_process( COMMAND "${CMAKE_COMMAND}" -E tar -xzf ${CMAKE_BINARY_DIR}/fugio-core-api.zip
-		WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/include" )
+    execute_process( COMMAND "${CMAKE_COMMAND}" -E tar -xzf ${CMAKE_BINARY_DIR}/fugio-core-api.zip
+            WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/include" )
 endif()
 
 set( FUGIO_API "${CMAKE_BINARY_DIR}/include" )
