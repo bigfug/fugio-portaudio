@@ -151,7 +151,7 @@ endif()
 
 include(ExternalProject)
 
-ExternalProject_Add(portuadio
+ExternalProject_Add(portaudio
   GIT_REPOSITORY    git@github.com:PortAudio/portaudio.git
   GIT_TAG           v19.7.0
   CMAKE_ARGS
