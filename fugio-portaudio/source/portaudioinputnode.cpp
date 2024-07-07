@@ -12,7 +12,9 @@
 PortAudioInputNode::PortAudioInputNode( QSharedPointer<fugio::NodeInterface> pNode ) :
 	NodeControlBase( pNode ), mPortAudio( nullptr ), mInstance( nullptr )
 {
-	mValAudio = pinOutput<fugio::AudioProducerInterface *>( "Audio", mPinAudio, PID_AUDIO );
+	FUGID( PIN_OUTPUT_AUDIO, "9e154e12-bcd8-4ead-95b1-5a59833bcf4e" );
+
+	mValAudio = pinOutput<fugio::AudioProducerInterface *>( "Audio", mPinAudio, PID_AUDIO, PIN_OUTPUT_AUDIO );
 
 	rebuildDeviceList();
 }

@@ -18,8 +18,6 @@
 
 #include "deviceportaudio.h"
 
-QList<QUuid>	NodeControlBase::PID_UUID;
-
 ClassEntry		PortAudioPlugin::mNodeClasses[] =
 {
 	ClassEntry( QT_TR_NOOP( "Audio Input" ),	"PortAudio", NID_PORT_AUDIO_INPUT, &PortAudioInputNode::staticMetaObject ),

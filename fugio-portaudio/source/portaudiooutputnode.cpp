@@ -13,9 +13,12 @@
 PortAudioOutputNode::PortAudioOutputNode( QSharedPointer<fugio::NodeInterface> pNode ) :
 	NodeControlBase( pNode ), mInstance( nullptr ), mVolume( 1.0f )
 {
-	mPinInputAudio = pinInput( "Audio" );
+	FUGID( PIN_INPUT_AUDIO, "9e154e12-bcd8-4ead-95b1-5a59833bcf4e" );
+	FUGID( PIN_INPUT_VOLUME, "1b5e9ce8-acb9-478d-b84b-9288ab3c42f5" );
 
-	mPinInputVolume = pinInput( "Volume" );
+	mPinInputAudio = pinInput( "Audio", PIN_INPUT_AUDIO );
+
+	mPinInputVolume = pinInput( "Volume", PIN_INPUT_VOLUME );
 
 	mPinInputVolume->registerPinInputType( PID_FLOAT );
 
