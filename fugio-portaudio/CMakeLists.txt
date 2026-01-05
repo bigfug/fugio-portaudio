@@ -32,8 +32,6 @@ set( PLUGIN_REQUIREMENTS "\
 
 project( ${PLUGIN_FILENAME} VERSION ${PLUGIN_RELEASE_VERSION} LANGUAGES CXX )
 
-include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/include )
-
 set( HEADER_FILES
 	include/fugio/portaudio/uuid.h
 )
@@ -64,30 +62,32 @@ set_target_properties( ${PROJECT_NAME} PROPERTIES
 if( FUGIO_API AND EXISTS ${FUGIO_API} )
 	target_include_directories( ${PROJECT_NAME} PRIVATE ${FUGIO_API} )
 
-	target_sources( ${PROJECT_NAME} PRIVATE
-		${FUGIO_API}/fugio/nodecontrolbase.h
-		${FUGIO_API}/fugio/pincontrolbase.h
-		)
+	target_link_libraries( ${PROJECT_NAME} PUBLIC libfugio )
 endif()
+
+#------------------------------------------------------------------------------
+# Includes
+
+target_include_directories( ${PROJECT_NAME} PRIVATE
+	${CMAKE_CURRENT_SOURCE_DIR}/include
+	${CMAKE_CURRENT_SOURCE_DIR}/../../fugio-core-plugins/fugio-core/include
+	${CMAKE_CURRENT_SOURCE_DIR}/../../fugio-core-plugins/fugio-audio/include
+)
 
 #------------------------------------------------------------------------------
 # PortAudio
 
-if( EXISTS "${CMAKE_BINARY_DIR}/portaudio/lib/portaudio_static_x64.lib" )
-	target_link_libraries( ${PROJECT_NAME} "${CMAKE_BINARY_DIR}/portaudio/lib/portaudio_static_x64.lib" )
+find_package(portaudio CONFIG REQUIRED)
 
-	target_include_directories( ${PROJECT_NAME} PRIVATE "${CMAKE_BINARY_DIR}/portaudio/include" )
+target_link_libraries(${PROJECT_NAME} PRIVATE portaudio)
 
-	target_compile_definitions( ${PROJECT_NAME} PRIVATE PORTAUDIO_SUPPORTED )
-
-	message( "PORTAUDIO: YES" )
-endif()
+target_compile_definitions( ${PROJECT_NAME} PRIVATE PORTAUDIO_SUPPORTED )
 
 #------------------------------------------------------------------------------
 # Plugin Config
 
 configure_file(
-	${CMAKE_SOURCE_DIR}/config.h.in
+	../config.h.in
 	${CMAKE_CURRENT_BINARY_DIR}/config.h
 	@ONLY
 )
@@ -102,7 +102,7 @@ target_include_directories( ${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR} 
 # Plugin Manifest
 
 configure_file(
-	${CMAKE_SOURCE_DIR}/manifest.json.in
+	../manifest.json.in
 	${CMAKE_CURRENT_BINARY_DIR}/manifest.json
 	@ONLY
 )
@@ -130,7 +130,7 @@ install( DIRECTORY examples	DESTINATION . COMPONENT ${PROJECT_NAME} PATTERN ".*"
 
 find_package( Qt6 COMPONENTS Core Widgets LinguistTools REQUIRED )
 
-target_link_libraries( ${PROJECT_NAME} Qt::Core Qt::Widgets )
+target_link_libraries( ${PROJECT_NAME} PRIVATE Qt::Core Qt::Widgets )
 
 #------------------------------------------------------------------------------
 # Translations

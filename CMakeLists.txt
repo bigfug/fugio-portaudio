@@ -147,19 +147,6 @@ elseif( UNIX )
 endif()
 
 #------------------------------------------------------------------------------
-# PortAudio
-
-include(ExternalProject)
-
-ExternalProject_Add(portaudio
-  GIT_REPOSITORY    git@github.com:PortAudio/portaudio.git
-  GIT_TAG           v19.7.0
-  CMAKE_ARGS
-		  -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_BINARY_DIR}/portaudio
-		  -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
-)
-
-#------------------------------------------------------------------------------
 
 set( FUGIO_UNIX_DEPENDENCIES )
 
@@ -168,13 +155,15 @@ add_subdirectory( fugio-portaudio )
 
 #------------------------------------------------------------------------------
 
-set( FUGIO_PLUGIN_URL ${CMAKE_BINARY_DIR} CACHE STRING "" )
+if (CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
+	set( FUGIO_PLUGIN_URL ${CMAKE_BINARY_DIR} CACHE STRING "" )
 
-configure_file( fugio-manifest.json.in ${CMAKE_BINARY_DIR}/fugio-manifest.json @ONLY )
+	configure_file( fugio-manifest.json.in ${CMAKE_CURRENT_BINARY_DIR}/fugio-manifest.json @ONLY )
 
-add_custom_target( fugio-plugin-manifest
-	SOURCES ${CMAKE_CURRENT_BINARY_DIR}/fugio-manifest.json
-)
+	add_custom_target( fugio-plugin-manifest
+		SOURCES ${CMAKE_CURRENT_BINARY_DIR}/fugio-manifest.json
+	)
+endif()
 
 #------------------------------------------------------------------------------
 # CPack
